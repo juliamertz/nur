@@ -2,14 +2,28 @@
 { fetchFromGitHub, ... }:
 {
   inputs = {
+    bluegone = "github:juliamertz/bluegone";
     nixpins = "github:juliamertz/nixpins";
+    sddm-rose-pine = "github:juliamertz/sddm-rose-pine";
   };
   sources = {
+    bluegone = fetchFromGitHub {
+      owner = "juliamertz";
+      repo = "bluegone";
+      rev = "a305a6f226e9d5d49847b7bdb9c1c476164d5337";
+      hash = "sha256-BjnzjdkD0EUfl9Q0xKk0SJoKxGdPH7l6+vElioC/tXU=";
+    };
     nixpins = fetchFromGitHub {
       owner = "juliamertz";
       repo = "nixpins";
-      rev = "e8410439655b74b97038352a8d3ec2d4c8a17fe3";
-      hash = "sha256-JW8FbXWUKynzzilD7SvHVKqgr9+jlXMTpmOd2hdj9Z4=";
+      rev = "b91ea7619bc2472fcb8e72df4849a43df03456dd";
+      hash = "sha256-LzgZ/uJaKwwQi/hxd+uf3cQwDcpNgOcMNqMYYv6w/VE=";
+    };
+    sddm-rose-pine = fetchFromGitHub {
+      owner = "juliamertz";
+      repo = "sddm-rose-pine";
+      rev = "5665b3630d4b3ca546cf74e6f0f511d5462f52a7";
+      hash = "sha256-QVnydE1NL0S/+4N7dkgjEB3I7DWWs5FHOhY3ovxnaYA=";
     };
   };
 }

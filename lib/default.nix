@@ -35,13 +35,4 @@ rec {
       config.allowUnfree = true;
     };
 
-  overlayedPackages =
-    system:
-    import nixpkgs {
-      inherit system;
-      overlays = [
-        (import ../overlays/builders.nix)
-        (import ../overlays/fetchers.nix)
-      ];
-    };
 }

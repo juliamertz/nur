@@ -1,21 +1,15 @@
 {
+  pins,
   rustPlatform,
   lib,
   makeWrapper,
   nix,
   nixfmt-rfc-style,
-  callPackage,
   ...
 }:
 let
-  pins = callPackage ../../pins.nix { };
-  src = "${pins.sources.nixpins}";
-
+  src = pins.sources.nixpins;
   manifest = lib.importTOML "${src}/Cargo.toml";
-  runtimeDeps = lib.makeBinPath [
-    nix
-    nixfmt-rfc-style
-  ];
 in
 rustPlatform.buildRustPackage {
   inherit (manifest.package) name version;
@@ -23,7 +17,12 @@ rustPlatform.buildRustPackage {
 
   nativeBuildInputs = [ makeWrapper ];
   postInstall = ''
-    wrapProgram "$out/bin/nixpins" --set PATH "${runtimeDeps}"
+    wrapProgram "$out/bin/nixpins" --set PATH "${
+      lib.makeBinPath [
+        nix
+        nixfmt-rfc-style
+      ]
+    }"
   '';
 
   cargoLock = {
@@ -31,5 +30,8 @@ rustPlatform.buildRustPackage {
     allowBuiltinFetchGit = true;
   };
 
-  meta.mainProgram = manifest.package.name;
+  meta = {
+    homepage = "https://github.com/juliamertz/nixpins";
+    mainProgram = "nixpins";
+  };
 }

@@ -1,4 +1,4 @@
-{ buildFirefoxXpiAddon, fetchurl, lib, stdenv }:
+{ buildFirefoxXpiAddon, fetchurl, lib, stdenv, ... }:
   {
     "alternate-twitch-player" = buildFirefoxXpiAddon {
       pname = "alternate-twitch-player";

@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+nix shell -f '<nixpkgs>' nix-build-uncached -c nix-build-uncached ci.nix -A cacheOutputs
