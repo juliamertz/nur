@@ -1,5 +1,14 @@
 {
-  # Add your overlays here
+  builders = import ./builders.nix;
+  fetchers = import ./fetchers.nix;
+
+  # packages = final: prev: {
+  #   firefoxAddons = final.callPackage ./packages/firefox-addons { };
+  # };
   #
-  # my-overlay = import ./my-overlay;
+  # default = self.lib.mergeOverlays (
+  #   nixpkgs.lib.mapAttrsToList (_: overlay: overlay) (
+  #     nixpkgs.lib.removeAttrs self.overlays [ "default" ]
+  #   )
+  # );
 }

@@ -1,0 +1,35 @@
+[
+  { "slug": "ublock-origin" },
+  { "slug": "sponsorblock" },
+  { "slug": "darkreader" },
+  { "slug": "proton-pass" },
+  { "slug": "return-youtube-dislikes" },
+  { "slug": "augmented-steam" },
+  { "slug": "protondb-for-steam" },
+  { "slug": "firefox-color" },
+  { "slug": "greasemonkey" },
+  { "slug": "i-dont-care-about-cookies" },
+  { "slug": "disable-javascript" },
+  { "slug": "decentraleyes" },
+  { "slug": "leechblock-ng" },
+  {
+    "slug": "privacy-badger17",
+    "pname": "privacy-badger"
+  },
+  {
+    "pname": "alternate-twitch-player",
+    "slug": "twitch_5"
+  },
+  {
+    "pname": "swagger-ui",
+    "slug": "swagger-ui-ff"
+  },
+  {
+    "slug": "vimium-ff",
+    "pname": "vimium"
+  },
+  {
+    "slug": "styl-us",
+    "pname": "stylus"
+  }
+]
