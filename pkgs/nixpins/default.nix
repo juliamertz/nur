@@ -9,7 +9,7 @@
 }:
 let
   pins = callPackage ../../pins.nix { };
-  src = pins.sources.nixpins;
+  src = "${pins.sources.nixpins}";
 
   manifest = lib.importTOML "${src}/Cargo.toml";
   runtimeDeps = lib.makeBinPath [

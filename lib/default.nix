@@ -35,7 +35,7 @@ rec {
       config.allowUnfree = true;
     };
 
-  importOverlayed =
+  overlayedPackages =
     system:
     import nixpkgs {
       inherit system;

@@ -1,5 +1,5 @@
 {
-  system,
+  system ? "x86_64-linux",
   nixpkgs ? <nixpkgs>,
 }:
 let
@@ -7,13 +7,13 @@ let
   modules = import ./modules;
   lib = import ./lib { inherit nixpkgs; };
 
-  inherit (lib.importOverlayed system) callPackage;
-  pins = callPackage ./pins.nix { };
+  pkgs = lib.overlayedPackages system;
+  pins = pkgs.callPackage ./pins.nix { };
 in
 {
   inherit overlays lib modules;
 
-  bluegone = callPackage ./pkgs/bluegone { };
-  nixpins = callPackage pins.sources.nixpins { };
-  # firefox-addons = pkgs.callPackage ./pkgs/firefox-addons { };
+  bluegone = pkgs.callPackage ./pkgs/bluegone { };
+  nixpins = pkgs.callPackage ./pkgs/nixpins { };
+  firefox-addons = pkgs.callPackage ./pkgs/firefox-addons { };
 }
