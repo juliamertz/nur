@@ -15,10 +15,10 @@
       perSystem =
         { self', pkgs, ... }:
         {
-          packages.default = pkgs.callPackage ./default.nix {};
+          packages.default = pkgs.callPackage ./default.nix { };
 
           devShells.default = pkgs.mkShell {
-            packages = [  ];
+            packages = [ ];
           };
 
           apps.default = {
@@ -28,4 +28,3 @@
         };
     };
 }
-

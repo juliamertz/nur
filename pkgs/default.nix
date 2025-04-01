@@ -5,7 +5,7 @@
   ...
 }:
 let
-args = {inherit pins;};
+  args = { inherit pins; };
 in
 {
   bluegone = callPackage ./bluegone args;

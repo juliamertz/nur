@@ -7,7 +7,7 @@
   cmake,
 }:
 
-rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage {
   pname = "bluegone";
   version = "0.2.0";
   src = pins.sources.bluegone;

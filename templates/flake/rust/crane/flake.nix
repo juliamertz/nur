@@ -43,8 +43,11 @@
         inherit (self.packages.${pkgs.system}) default;
       });
 
-      devShells = forEachSystem (pkgs:
-        let craneLib = crane.mkLib pkgs; in
+      devShells = forEachSystem (
+        pkgs:
+        let
+          craneLib = crane.mkLib pkgs;
+        in
         {
           default = craneLib.devShell {
             checks = self.checks.${pkgs.system};
