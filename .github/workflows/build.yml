@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - main
-  schedule:
-    # rebuild everyday at 2:30
-    - cron:  '30 2 * * *'
+  # schedule:
+  #   # rebuild everyday at 2:30
+  #   - cron:  '30 2 * * *'
   workflow_dispatch:
 jobs:
   build:
@@ -39,4 +39,6 @@ jobs:
 
     - name: Build nix packages
       run: |
-          nix run github:Mic92/nix-fast-build
+          nix run github:Mic92/nix-fast-build -- \
+              --cachix-cache "${{ matrix.cachixName }}" \
+              --skip-cached
