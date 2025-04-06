@@ -2,16 +2,45 @@
   description = "Personal NUR repository";
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nix-fast-build.url = "github:Mic92/nix-fast-build";
+
+    nixpins.url = "github:juliamertz/nixpins";
+    bluegone = { 
+      url = "github:juliamertz/bluegone";
+      flake = false;
+    };
+    sddm-rose-pine = {
+      url = "github:juliamertz/sddm-rose-pine";
+      flake = false;
+    };
   };
 
   outputs =
-    { self, nixpkgs }:
-    rec {
+    { self, nixpkgs, ... }@inputs:
+    let
       lib = import ./lib { inherit nixpkgs; };
-      overlays = import ./overlays;
-      templates = import ./templates/flake;
+      overlays = import ./overlays { inherit self lib; };
+      templates = import ./templates;
+    in
+    rec {
+      inherit lib overlays templates;
 
-      packages = lib.allSystems (system: lib.packagesFromLegacy system self.legacyPackages);
-      legacyPackages = lib.allSystems (system: import ./default.nix { inherit system nixpkgs; });
+      packages = lib.allSystemsPkgs (
+        pkgs: import ./pkgs (pkgs.appendOverlays [ overlays.default ] // { inherit inputs; })
+      );
+
+      checks = lib.allSystemsPkgs (
+        pkgs:
+        self.packages.${pkgs.system}
+        |> lib.filterAttrs (_: p: lib.elem pkgs.system (p.meta.platforms or lib.systems.default))
+      );
+
+      devShells = lib.allSystemsPkgs(pkgs: {
+        default = pkgs.mkShell {
+          packages = [
+            inputs.nix-fast-build.packages.${pkgs.system}.default
+          ];
+        };
+      });
     };
 }

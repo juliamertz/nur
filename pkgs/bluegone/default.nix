@@ -1,5 +1,5 @@
 {
-  pins,
+  inputs,
   lib,
   rustPlatform,
   pkg-config,
@@ -10,7 +10,7 @@
 rustPlatform.buildRustPackage {
   pname = "bluegone";
   version = "0.2.0";
-  src = pins.sources.bluegone;
+  src = inputs.bluegone;
 
   cargoHash = "sha256-s5u0y0o1k/d0Uj6QcXR12HhT4Iwi3RmIxRpxV7adXPs=";
 

@@ -1,11 +1,12 @@
 {
-  nixpkgs ? <nixpkgs>,
+  nixpkgs,
   ...
 }:
 let
   inherit (nixpkgs) lib;
 in
-rec {
+nixpkgs.lib
+// rec {
   # mkFlake =
   #   attrs:
   #   inputs.flake-parts.lib.mkFlake { inputs = { }; } {
@@ -13,8 +14,12 @@ rec {
   #     perSystem = attrs.perSystem;
   #   };
 
+  systems = import ../lib/systems.nix;
+
   eachSystem = systems: func: lib.genAttrs systems (system: func system);
-  allSystems = eachSystem lib.systems.flakeExposed;
+  allSystems = eachSystem systems.default;
+  allSystemsPkgs =
+    func: lib.genAttrs systems.default (system: func nixpkgs.legacyPackages.${system});
 
   # merge list of overlays into single overlay
   mergeOverlays =
@@ -34,5 +39,4 @@ rec {
       inherit system;
       config.allowUnfree = true;
     };
-
 }

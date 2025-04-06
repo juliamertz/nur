@@ -1,39 +1,38 @@
 rec {
-  default = tools;
+  default = tools-flake;
 
-  tools = {
-    path = ./tools;
+  tools-flake = {
+    path = ./flake/tools;
     description = "Minimal using this repo's mkFlake";
   };
 
-  minimal = {
-    path = ./minimal;
+  minimal-flake = {
+    path = ./flake/minimal;
     description = "A very simple flake";
   };
 
-  systems = {
-    path = ./systems;
+  systems-flake = {
+    path = ./flake/systems;
     description = "Minimal flake using nix-systems";
   };
 
-  hercules-ci = {
-    path = ./hercules-ci;
+  hercules-ci-flake = {
+    path = ./flake/hercules-ci;
     description = "Basic flake using Hercules CI flake-parts";
   };
 
-  rust = {
-    path = ./rust/default;
+  rust-flake = {
+    path = ./flake/rust/default;
     description = "Rust development flake";
   };
 
-  rust-crane = {
-    path = ./rust/crane;
+  rust-crane-flake = {
+    path = ./flake/rust/crane;
     description = "Rust development flake with cranelib";
   };
 
-  zig = {
-    path = ./zig;
+  zig-flake = {
+    path = ./flake/zig;
     description = "Zig development flake";
   };
-
 }
