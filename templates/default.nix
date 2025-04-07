@@ -35,4 +35,9 @@ rec {
     path = ./flake/zig;
     description = "Zig development flake";
   };
+
+  astro-site-flake = {
+    path = ./flake/astro-site;
+    description = "Static astro website flake";
+  };
 }
