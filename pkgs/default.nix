@@ -17,5 +17,7 @@ filterForSystem "x86_64-linux" {
   nixpins = defaultPackage pins.nixpins;
   bluegone = callPackage ./bluegone { inherit (pins) bluegone; };
   sddm-rose-pine = callPackage ./sddm-rose-pine { inherit (pins) sddm-rose-pine; };
-  firefox-addons = callPackage ./firefox-addons { };
+
+  firefoxAddons = callPackage ./firefox-addons { };
+  zshPlugins = callPackage ./zsh-plugins { };
 }

@@ -18,8 +18,7 @@ nixpkgs.lib
 
   eachSystem = systems: func: lib.genAttrs systems (system: func system);
   allSystems = eachSystem systems.default;
-  allSystemsPkgs =
-    func: lib.genAttrs systems.default (system: func nixpkgs.legacyPackages.${system});
+  allSystemsPkgs = func: lib.genAttrs systems.default (system: func nixpkgs.legacyPackages.${system});
 
   # merge list of overlays into single overlay
   mergeOverlays =

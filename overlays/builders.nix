@@ -1,4 +1,6 @@
-final: prev: {
+final: prev: let
+  inherit (prev) lib;
+in{
 
   # build derivation from xpi firefox addon archive
   # origin: https://gitlab.com/rycee/nur-expressions/-/blob/master/pkgs/firefox-addons/default.nix
@@ -47,7 +49,7 @@ final: prev: {
     }:
     let
       inherit (package.meta) mainProgram;
-      join = value: if builtins.isList value then prev.lib.concatStringsSep " " value else value;
+      join = value: if builtins.isList value then lib.concatStringsSep " " value else value;
     in
     prev.symlinkJoin {
       name = if builtins.isNull name then mainProgram else name;
@@ -66,4 +68,12 @@ final: prev: {
       meta.mainProgram = mainProgram;
     };
 
+  # Make toplevel package from attrset of subpackages
+  makeToplevel =
+    name: packages:
+    packages
+    // final.symlinkJoin {
+      inherit name;
+      paths = lib.attrValues packages |> lib.filter lib.isDerivation;
+    };
 }
