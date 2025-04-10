@@ -2,9 +2,9 @@
 { fetchFromGitHub, ... }:
 {
   inputs = {
-    bluegone = "github:juliamertz/bluegone";
-    nixpins = "github:juliamertz/nixpins";
-    sddm-rose-pine = "github:juliamertz/sddm-rose-pine";
+    bluegone.url = "github:juliamertz/bluegone";
+    nixpins.url = "github:juliamertz/nixpins";
+    sddm-rose-pine.url = "github:juliamertz/sddm-rose-pine";
   };
   sources = {
     bluegone = fetchFromGitHub {
@@ -16,8 +16,8 @@
     nixpins = fetchFromGitHub {
       owner = "juliamertz";
       repo = "nixpins";
-      rev = "b91ea7619bc2472fcb8e72df4849a43df03456dd";
-      hash = "sha256-LzgZ/uJaKwwQi/hxd+uf3cQwDcpNgOcMNqMYYv6w/VE=";
+      rev = "a4a853fb82b05514803f66216f4451adc9992cb7";
+      hash = "sha256-HwbW3MF1r4cfEmkxcT+HpyjvYDvdHjDjWINiO4Uz48w=";
     };
     sddm-rose-pine = fetchFromGitHub {
       owner = "juliamertz";
