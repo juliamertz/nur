@@ -10,7 +10,7 @@
     let
       lib = import ./lib { inherit nixpkgs; };
       overlays = import ./overlays { inherit self lib; };
-      templates = import ./templates;
+      templates = import ./templates { inherit lib; };
     in
     rec {
       inherit lib overlays templates;
@@ -25,7 +25,7 @@
         |> lib.filterAttrs (_: p: lib.elem pkgs.system (p.meta.platforms or lib.systems.default))
       );
 
-      devShells = lib.allSystemsPkgs(pkgs: {
+      devShells = lib.allSystemsPkgs (pkgs: {
         default = pkgs.mkShell {
           packages = [
             inputs.nix-fast-build.packages.${pkgs.system}.default
