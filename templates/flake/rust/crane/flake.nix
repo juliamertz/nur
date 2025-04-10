@@ -2,6 +2,10 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     crane.url = "github:ipetkov/crane";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -9,51 +13,52 @@
       self,
       nixpkgs,
       crane,
+      flake-utils,
+      rust-overlay,
+      ...
     }:
-    let
-      forEachSystem =
-        f:
-        nixpkgs.lib.genAttrs (nixpkgs.lib.systems.flakeExposed) (
-          system: f nixpkgs.legacyPackages.${system}
-        );
-    in
-    {
-      packages = forEachSystem (
-        pkgs:
-        let
-          craneLib = crane.mkLib pkgs;
-          commonArgs = {
-            src = craneLib.cleanCargoSource ./.;
-            strictDeps = true;
-            buildInputs = [ ] ++ pkgs.lib.optionals pkgs.stdenv.isDarwin [ pkgs.libiconv ];
-          };
-        in
-        {
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = import nixpkgs {
+          inherit system;
+          overlays = [ (import rust-overlay) ];
+        };
+
+        craneLib = (crane.mkLib pkgs).overrideToolchain (p: p.rust-bin.nightly.latest.default);
+        craneArgs = {
+          src = craneLib.cleanCargoSource ./.;
+          strictDeps = true;
+        };
+      in
+      {
+        checks = {
+          inherit (self.packages.${system}) default;
+        };
+
+        packages = {
           default = craneLib.buildPackage (
-            commonArgs
+            craneArgs
             // {
-              cargoArtifacts = craneLib.buildDepsOnly commonArgs;
-              meta.mainProgram = "noogle";
+              cargoArtifacts = craneLib.buildDepsOnly craneArgs;
+              meta.mainProgram = "wvm-backend";
             }
           );
-        }
-      );
+        };
 
-      checks = forEachSystem (pkgs: {
-        inherit (self.packages.${pkgs.system}) default;
-      });
-
-      devShells = forEachSystem (
-        pkgs:
-        let
-          craneLib = crane.mkLib pkgs;
-        in
-        {
-          default = craneLib.devShell {
-            checks = self.checks.${pkgs.system};
-            packages = with pkgs; [ ];
-          };
-        }
-      );
-    };
+        devShells.default = craneLib.devShell {
+          checks = self.checks.${system};
+          packages = with pkgs.rust-bin; [
+            nightly.latest.rustfmt
+            nightly.latest.rust-analyzer
+            (nightly.latest.minimal.override {
+              extensions = [
+                "clippy"
+                "rust-src"
+              ];
+            })
+          ];
+        };
+      }
+    );
 }
