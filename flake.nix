@@ -3,16 +3,6 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-fast-build.url = "github:Mic92/nix-fast-build";
-
-    nixpins.url = "github:juliamertz/nixpins";
-    bluegone = { 
-      url = "github:juliamertz/bluegone";
-      flake = false;
-    };
-    sddm-rose-pine = {
-      url = "github:juliamertz/sddm-rose-pine";
-      flake = false;
-    };
   };
 
   outputs =
