@@ -1,5 +1,5 @@
 {
-  inputs,
+  pkgs,
   lib,
   system,
   callPackage,
@@ -15,6 +15,8 @@ let
 in
 filterForSystem "x86_64-linux" {
   nixpins = defaultPackage pins.nixpins;
+  cosmic-theme-utils = defaultPackage pins.cosmic-theme-utils;
+
   bluegone = callPackage ./bluegone { inherit (pins) bluegone; };
   sddm-rose-pine = callPackage ./sddm-rose-pine { inherit (pins) sddm-rose-pine; };
 

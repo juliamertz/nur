@@ -6,6 +6,10 @@ in
 {
   inputs = {
     bluegone.url = "github:juliamertz/bluegone";
+    cosmic-theme-utils = {
+      url = "github:juliamertz/cosmic-theme-utils";
+      flake = true;
+    };
     nixpins = {
       url = "github:juliamertz/nixpins";
       flake = true;
@@ -18,6 +22,11 @@ in
       repo = "bluegone";
       rev = "a305a6f226e9d5d49847b7bdb9c1c476164d5337";
       hash = "sha256-BjnzjdkD0EUfl9Q0xKk0SJoKxGdPH7l6+vElioC/tXU=";
+    };
+    cosmic-theme-utils = fetchFlake {
+      url = "github:juliamertz/cosmic-theme-utils";
+      rev = "130c632f02cbebd974e0b51d2712ff793de73fe5";
+      hash = "sha256-NATCIvnwHJ+um0FP3mfrw8p7M52I4Uoa9niRVmyeQgA=";
     };
     nixpins = fetchFlake {
       url = "github:juliamertz/nixpins";
