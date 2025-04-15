@@ -29,6 +29,11 @@
     description = "Rust development flake with cranelib";
   };
 
+  rust-crane-toolchain = {
+    path = ./rust/crane-toolchain;
+    description = "Rust development flake with cranelib and a custom toolchain";
+  };
+
   zig = {
     path = ./zig;
     description = "Zig development flake";

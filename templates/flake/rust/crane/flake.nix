@@ -8,21 +8,19 @@
     };
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      crane,
-      flake-utils,
-      rust-overlay,
-      ...
-    }:
+  outputs = {
+    self,
+    nixpkgs,
+    crane,
+    flake-utils,
+    rust-overlay,
+    ...
+  }:
     flake-utils.lib.eachDefaultSystem (
-      system:
-      let
+      system: let
         pkgs = import nixpkgs {
           inherit system;
-          overlays = [ (import rust-overlay) ];
+          overlays = [(import rust-overlay)];
         };
 
         craneLib = (crane.mkLib pkgs).overrideToolchain (p: p.rust-bin.nightly.latest.default);
@@ -30,20 +28,19 @@
           src = craneLib.cleanCargoSource ./.;
           strictDeps = true;
         };
-      in
-      {
-        checks = {
-          inherit (self.packages.${system}) default;
-        };
-
+      in {
         packages = {
           default = craneLib.buildPackage (
             craneArgs
             // {
               cargoArtifacts = craneLib.buildDepsOnly craneArgs;
-              meta.mainProgram = "wvm-backend";
+              meta.mainProgram = "my-package";
             }
           );
+        };
+
+        checks = {
+          inherit (self.packages.${system}) default;
         };
 
         devShells.default = craneLib.devShell {
